@@ -48,9 +48,8 @@ def post_share(request, post_id):
             subject = f"{cd['name']}님이 {post.title}을 추천합니다."
             message = f"{post.title}을 다음에서 읽어보세요\n\n." \
                       f"{cd['name']}님의 의견:{cd['comments']}"
-            send_mail(subject,message,'myemail@gmail.com', [cd['to']])
+            send_mail(subject, message, 'myemail@gmail.com', [cd['to']])
             sent = True
-
     else:
         form = EmailPostForm()
     return render(request, 'blog/post/share.html', {'post': post, 'form': form, 'sent': sent})

@@ -35,7 +35,9 @@ def post_detail(request, year, month, day, post):
                              publish__day=day)
     comments = post.comments.filter(active=True)
     form = CommentForm()
-    return render(request, 'blog/post/detail.html', {'post': post})
+    return render(request, 'blog/post/detail.html', {'post': post,
+                                                     'comments': comments,
+                                                     'form': form})
 
 
 def post_share(request, post_id):
@@ -60,7 +62,7 @@ def post_share(request, post_id):
 
 @require_POST
 def post_comment(request, post_id):
-    post = get_object_or_404(Post, id=post_id, status=Post.status.PUBLISHED)
+    post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
     comment = None
     form = CommentForm(data=request.POST)
     if form.is_valid():

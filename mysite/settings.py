@@ -136,3 +136,7 @@ EMAIL_HOST_USER = 'myemail'
 EMAIL_HOST_PASSWORD = 'mypassword'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'

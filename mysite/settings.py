@@ -173,6 +173,7 @@ secret_file = os.path.join(BASE_DIR, 'secret.json')
 with open(secret_file) as f:
     secrets = json.loads(f.read())
 
+
 def get_secret(setting, secrets=secrets):
     try:
         return secrets[setting]
@@ -180,7 +181,21 @@ def get_secret(setting, secrets=secrets):
         error_msg = "Set the {} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
 
+
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = get_secret('google_auth_key')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = get_secret('google_auth_secret')
 SOCIAL_AUTH_FACEBOOK_KEY = get_secret('fb_auth_key')
 SOCIAL_AUTH_FACEBOOK_SECRET = get_secret('fb_auth_secret')
+
+SOCIAL_AUTH_PIPELINE = [
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'account.authentication.create_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+]

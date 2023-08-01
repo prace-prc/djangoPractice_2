@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-gw&3_r-_@(qt_#jtu^z#82ixmn9_49o16bjl)_5ks8tdlhui81
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mysite', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 SITE_ID = 1
 
@@ -158,5 +158,7 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
     'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
 ]
+
 

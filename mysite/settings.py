@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+from django.core.exceptions import ImproperlyConfigured
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -161,4 +163,24 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.facebook.FacebookOAuth2',
 ]
 
+import os
+import json
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+secret_file = os.path.join(BASE_DIR, 'secret.json')
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = get_secret('google_auth_key')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = get_secret('google_auth_secret')
+SOCIAL_AUTH_FACEBOOK_KEY = get_secret('fb_auth_key')
+SOCIAL_AUTH_FACEBOOK_SECRET = get_secret('fb_auth_secret')

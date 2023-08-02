@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from images.forms import ImageCreateForm
+from .forms import ImageCreateForm
 
 
 # Create your views here.
@@ -19,4 +19,4 @@ def image_create(request):
             return redirect(new_image.get_absolute_url())
     else:
         form = ImageCreateForm(data=request.GET)
-    return render(request, 'images/image/create.html', {'section': 'images', 'form': 'form'})
+    return render(request, 'images/image/create.html', {'section': 'images', 'form': form})

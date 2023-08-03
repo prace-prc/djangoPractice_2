@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'social_django',
     'images.apps.ImagesConfig',
+    'actions.apps.ActionsConfig',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',

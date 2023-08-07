@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'social_django',
     'images.apps.ImagesConfig',
     'actions.apps.ActionsConfig',
+    'shop.apps.ShopConfig',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',

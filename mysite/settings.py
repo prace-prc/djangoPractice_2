@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'images.apps.ImagesConfig',
     'actions.apps.ActionsConfig',
     'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',

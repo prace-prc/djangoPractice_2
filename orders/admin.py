@@ -19,6 +19,7 @@ def export_to_csv(modeladmin, request, queryset):
     content_disposition = f'attachment; filename={opts.verbose_name}.csv'
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = content_disposition
+    response.write(u'\ufeff'.encode('utf8'))
     writer = csv.writer(response)
     fields = [field for field in opts.get_fields() if not
     field.many_to_many and not field.one_to_many]
@@ -50,8 +51,8 @@ order_payment.short_description = 'Stripe payment'
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'first_name', 'last_name', 'email', 'address', 'postal_code', 'city', 'paid', 'created',
-                    'updated']
+    list_display = ['id', 'first_name', 'last_name', 'email', 'address', 'postal_code', 'city', 'paid', order_payment,
+                    'created', 'updated']
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
     actions = [export_to_csv]

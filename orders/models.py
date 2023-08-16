@@ -35,7 +35,8 @@ class Order(models.Model):
             path = '/test/'
         else:
             path = '/'
-        return f'https://dashboard.stripe.com{path}payments/{self.stripe_id}'
+        return f'https://dashboard.stripe.com/test/payments/{self.stripe_id}'
+        # return f'https://dashboard.stripe.com{path}payments/{self.stripe_id}'
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,

@@ -45,11 +45,11 @@ msgstr "도시"
 #: .\orders\templates\orders\order\create.html:4
 #: .\orders\templates\orders\order\create.html:6
 msgid "Checkout"
-msgstr ""
+msgstr "체크아웃"
 
 #: .\orders\templates\orders\order\create.html:8
 msgid "Your order"
-msgstr ""
+msgstr "주문"
 
 #: .\orders\templates\orders\order\create.html:16
 #, python-format
@@ -61,8 +61,8 @@ msgstr ""
 
 #: .\orders\templates\orders\order\create.html:23
 msgid "Total"
-msgstr ""
+msgstr "총합"
 
 #: .\orders\templates\orders\order\create.html:28
 msgid "Place order"
-msgstr ""
+msgstr "주문하기"

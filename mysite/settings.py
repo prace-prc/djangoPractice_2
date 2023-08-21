@@ -37,6 +37,7 @@ SITE_ID = 1
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'taggit',
+    'rosetta',
     'account.apps.AccountConfig',
     'social_django',
     'images.apps.ImagesConfig',

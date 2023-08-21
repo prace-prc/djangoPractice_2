@@ -20,11 +20,11 @@ msgstr ""
 
 #: .\mysite\settings.py:134
 msgid "English"
-msgstr ""
+msgstr "영어"
 
 #: .\mysite\settings.py:135
 msgid "Korean"
-msgstr ""
+msgstr "한국어"
 
 #: .\venv\Lib\site-packages\click\_termui_impl.py:518
 #, python-brace-format

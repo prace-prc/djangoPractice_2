@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-21 13:49+0900\n"
+"POT-Creation-Date: 2023-08-22 09:30+0900\n"
 "PO-Revision-Date: 2023-08-22 09:07+0900\n"
 "Last-Translator:   <admin@admin.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,3 +69,7 @@ msgstr "총합"
 #: .\orders\templates\orders\order\create.html:28
 msgid "Place order"
 msgstr "주문하기"
+
+#: .\orders\urls.py:8
+msgid "create/"
+msgstr ""

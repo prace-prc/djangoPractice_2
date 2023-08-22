@@ -23,6 +23,7 @@ from django.urls import path, include
 from blog.sitemaps import PostSitemap
 from django.utils.translation import gettext_lazy as _
 
+from payment import webhooks
 
 sitemaps = {
     'posts': PostSitemap,
@@ -44,6 +45,10 @@ urlpatterns = i18n_patterns(
          name='django.contrib.sitemaps.views.sitemap'),
     path('__debug__/', include('debug_toolbar.urls')),
 )
+
+urlpatterns += [
+    path('payment/webhook/', webhooks.stripe_webhook, name='stripe-webhook'),
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

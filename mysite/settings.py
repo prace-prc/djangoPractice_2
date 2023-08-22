@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'taggit',
     'rosetta',
+    'parler',
     'account.apps.AccountConfig',
     'social_django',
     'images.apps.ImagesConfig',
@@ -242,3 +243,15 @@ STRIPE_PUBLISHABLE_KEY = get_secret('stripe_pb_key')
 STRIPE_SECRET_KEY = get_secret('stripe_secret_key')
 STRIPE_API_VERSION = '2022-08-01'
 STRIPE_WEBHOOK_SECRET = get_secret('stripe_webhook_sec')
+
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en'},
+        {'code': 'ko'},
+    ),
+    'default': {
+        'fallback': 'en'
+        ,
+        'hide_untranslated': False,
+    }
+}

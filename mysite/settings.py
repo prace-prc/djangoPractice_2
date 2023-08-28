@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,8 +37,17 @@ SITE_ID = 1
 INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'taggit',
+    'rosetta',
+    'parler',
     'account.apps.AccountConfig',
     'social_django',
+    'images.apps.ImagesConfig',
+    'actions.apps.ActionsConfig',
+    'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
+    'payment.apps.PaymentConfig',
+    'orders.apps.OrdersConfig',
+    'coupons.apps.CouponsConfig',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,11 +58,15 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.postgres',
+    'easy_thumbnails',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -73,6 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart',
             ],
         },
     },
@@ -115,7 +131,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ko-kr'
+LANGUAGE_CODE = 'en'
+LANGUAGES = [
+    ('en', _('English')),
+    ('ko', _('Korean')),
+]
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 TIME_ZONE = 'Asia/Seoul'
 
@@ -127,6 +150,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -173,6 +197,7 @@ secret_file = os.path.join(BASE_DIR, 'secret.json')
 with open(secret_file) as f:
     secrets = json.loads(f.read())
 
+
 def get_secret(setting, secrets=secrets):
     try:
         return secrets[setting]
@@ -180,7 +205,53 @@ def get_secret(setting, secrets=secrets):
         error_msg = "Set the {} environment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
 
+
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = get_secret('google_auth_key')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = get_secret('google_auth_secret')
 SOCIAL_AUTH_FACEBOOK_KEY = get_secret('fb_auth_key')
 SOCIAL_AUTH_FACEBOOK_SECRET = get_secret('fb_auth_secret')
+
+SOCIAL_AUTH_PIPELINE = [
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'account.authentication.create_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+]
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: reverse_lazy('user_detail',
+                                        args=[u.username])
+}
+
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
+
+CART_SESSION_ID = 'cart'
+
+STRIPE_PUBLISHABLE_KEY = get_secret('stripe_pb_key')
+STRIPE_SECRET_KEY = get_secret('stripe_secret_key')
+STRIPE_API_VERSION = '2022-08-01'
+STRIPE_WEBHOOK_SECRET = get_secret('stripe_webhook_sec')
+
+PARLER_LANGUAGES = {
+    None: (
+        {'code': 'en'},
+        {'code': 'ko'},
+    ),
+    'default': {
+        'fallback': 'en'
+        ,
+        'hide_untranslated': False,
+    }
+}
